@@ -44,7 +44,7 @@ var download = function(uri, callback){
   });
 };
 
-exports.handle = function(event, ctx, callback) {
+exports.handler = function(event, ctx, callback) {
   try {
     var url = event.imageUrl;
     download(url, callback)
