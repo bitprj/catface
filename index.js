@@ -4,6 +4,16 @@ var cv = require('opencv');
 var http = require('http');
 var request = require('request');
 
+
+exports.handler = function(event, ctx, callback) {
+  try {
+    var url = event.imageUrl;
+    download(url, callback)
+  } catch (e) {
+    callback(e.stack);
+  }
+};
+
 var download = function(uri, callback){
   request.head(uri, function(err, res, body){
     request(uri).pipe(fs.createWriteStream('/tmp/image.jpg')).on('finish', function() {
@@ -42,13 +52,4 @@ var download = function(uri, callback){
         });
     });
   });
-};
-
-exports.handler = function(event, ctx, callback) {
-  try {
-    var url = event.imageUrl;
-    download(url, callback)
-  } catch (e) {
-    callback(e.stack);
-  }
 };
